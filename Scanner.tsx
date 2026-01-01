@@ -2,13 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Menu,
-  HelpCircle,
   Image as ImageIcon,
   Zap,
   Calculator,
   Sparkles,
   X,
-  BrainCircuit
+  BrainCircuit,
+  Type
 } from 'lucide-react';
 import { solveMathProblemFromImage } from './gemini';
 
@@ -19,6 +19,7 @@ interface ScannerProps {
 const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -82,6 +83,38 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || isCapturing) return;
+
+    setIsCapturing(true);
+    setError(null);
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const base64Data = (event.target?.result as string)?.split(',')[1];
+        if (base64Data) {
+          try {
+            const result = await solveMathProblemFromImage(base64Data);
+            navigate('/solver', { state: { scanResult: result } });
+          } catch (err: any) {
+            setError(err.message);
+            setIsCapturing(false);
+          }
+        }
+      };
+      reader.onerror = () => {
+        setError("Failed to read the image file.");
+        setIsCapturing(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      setError("Failed to process image.");
+      setIsCapturing(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black z-[50] flex flex-col overflow-hidden select-none">
       {/* Live Video Feed */}
@@ -117,9 +150,11 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
           </div>
 
           <button
-            className="p-3.5 text-white pointer-events-auto bg-black/20 backdrop-blur-xl hover:bg-white/10 rounded-2xl transition-all border border-white/10"
+            onClick={() => navigate('/solver')}
+            className="p-3.5 text-white pointer-events-auto bg-black/20 backdrop-blur-xl hover:bg-white/10 rounded-2xl transition-all active:scale-90 border border-white/10 flex items-center space-x-2"
           >
-            <HelpCircle size={24} strokeWidth={2.5} />
+            <Type size={24} strokeWidth={2.5} />
+            <span className="font-bold text-[15px] hidden sm:block">Type</span>
           </button>
         </div>
 
@@ -190,7 +225,17 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
           </div>
 
           <div className="flex items-center space-x-20">
-            <button className="pointer-events-auto p-4 text-white/50 hover:text-white transition-all active:scale-90 flex flex-col items-center">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="pointer-events-auto p-4 text-white/50 hover:text-white transition-all active:scale-90 flex flex-col items-center"
+            >
               <ImageIcon size={28} strokeWidth={2.5} />
             </button>
             <button

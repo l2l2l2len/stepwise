@@ -1,20 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { 
-  Search, 
-  History, 
-  Sparkles, 
-  ChevronDown, 
-  ChevronUp, 
-  AlertCircle, 
-  BrainCircuit, 
-  ChevronLeft, 
-  Menu, 
-  Copy, 
-  Check, 
-  Share2,
-  Lightbulb
+import {
+  Search,
+  History,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  AlertCircle,
+  BrainCircuit,
+  ChevronLeft,
+  Menu,
+  Copy,
+  Check,
+  Lightbulb,
+  X,
+  Clock
 } from 'lucide-react';
 import { solveMathProblem } from './gemini';
 import { SolverResult } from './types';
@@ -35,6 +36,7 @@ const Solver: React.FC<SolverProps> = ({ onMenuClick }) => {
   const [simplifiedSteps, setSimplifiedSteps] = useState<Record<number, boolean>>({});
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('stepwise_solver_history');
@@ -91,6 +93,14 @@ const Solver: React.FC<SolverProps> = ({ onMenuClick }) => {
     "What is the standard deviation of {2, 4, 4, 4, 5, 5, 7, 9}?"
   ];
 
+  const loadFromHistory = (item: SolverResult) => {
+    setResult(item);
+    setInput(item.problem);
+    setExpandedStep(0);
+    setSimplifiedSteps({});
+    setShowHistory(false);
+  };
+
   return (
     <div className="flex-1 flex flex-col h-full bg-apple-bg overflow-hidden">
       {/* Universal Top Navigation Bar */}
@@ -117,14 +127,47 @@ const Solver: React.FC<SolverProps> = ({ onMenuClick }) => {
         </div>
         
         <div className="flex items-center space-x-1 sm:space-x-3">
-          <button className="p-2.5 text-apple-gray hover:text-apple-darkGray hover:bg-black/5 rounded-xl transition-all">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className={`p-2.5 rounded-xl transition-all ${showHistory ? 'text-purple-600 bg-purple-500/10' : 'text-apple-gray hover:text-apple-darkGray hover:bg-black/5'}`}
+          >
             <History size={20} strokeWidth={2.5} />
-          </button>
-          <button className="p-2.5 text-apple-gray hover:text-apple-darkGray hover:bg-black/5 rounded-xl transition-all">
-            <Share2 size={20} strokeWidth={2.5} />
           </button>
         </div>
       </div>
+
+      {/* History Panel */}
+      {showHistory && (
+        <div className="absolute top-[72px] right-4 w-80 max-h-96 bg-white rounded-2xl border border-black/[0.05] shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="p-4 border-b border-black/[0.05] flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Clock size={16} className="text-apple-gray" />
+              <span className="font-bold text-apple-darkGray">Recent Problems</span>
+            </div>
+            <button onClick={() => setShowHistory(false)} className="p-1.5 text-apple-gray hover:text-apple-darkGray rounded-full hover:bg-black/5">
+              <X size={18} />
+            </button>
+          </div>
+          <div className="max-h-72 overflow-y-auto">
+            {history.length === 0 ? (
+              <div className="p-6 text-center text-apple-gray text-sm">
+                No history yet. Solve a problem to see it here.
+              </div>
+            ) : (
+              history.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => loadFromHistory(item)}
+                  className="w-full p-4 text-left hover:bg-black/[0.02] border-b border-black/[0.03] last:border-b-0 transition-colors"
+                >
+                  <p className="font-bold text-apple-darkGray text-sm truncate">{item.problem}</p>
+                  <p className="text-xs text-apple-gray mt-1 truncate">Answer: {item.finalAnswer}</p>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto px-6 py-12 md:px-20 lg:px-32">
         <div className="max-w-4xl mx-auto space-y-16">

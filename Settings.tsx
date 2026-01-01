@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Added Sparkles to the imports below to fix the "Cannot find name 'Sparkles'" error
-import { ChevronLeft, ChevronRight, Menu, X, Check, Globe, Moon, Sun, Smartphone, Bell, Info, Mail, Star, ExternalLink, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Globe, Moon, Sun, Smartphone, Info, Sparkles, Zap, Heart, Database } from 'lucide-react';
 import { AppSettings } from './App';
 
 interface SettingsPageProps {
@@ -102,26 +101,22 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, setSettings, onMe
 
   const renderMain = () => (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
-      
-      {/* Account Section */}
-      <div className="space-y-3 px-4">
-        <h3 className="text-[13px] font-bold text-apple-gray uppercase tracking-[0.05em] px-1">Account</h3>
-        <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow">
-          <div className="p-6 flex items-center justify-between group cursor-pointer hover:bg-apple-lightGray/30 transition-colors">
-            <div className="flex items-center space-x-5">
-              <div className="w-14 h-14 bg-apple-blue rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
-                <span className="text-xl font-bold">JS</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-lg text-apple-darkGray">John Smith</span>
-                <span className="text-sm font-medium text-apple-success flex items-center space-x-1">
-                   <ShieldCheck size={14} />
-                   <span>Unlimited Member</span>
-                </span>
-              </div>
+
+      {/* Free Access Banner */}
+      <div className="px-4">
+        <div className="bg-gradient-to-tr from-apple-success/[0.08] to-apple-blue/[0.08] p-6 rounded-[24px] border border-apple-success/10 shadow-sm">
+          <div className="flex items-center space-x-4 mb-3">
+            <div className="w-12 h-12 bg-apple-success/10 rounded-xl flex items-center justify-center">
+              <Zap size={24} className="text-apple-success" />
             </div>
-            <ChevronRight size={22} className="text-apple-gray/30 group-hover:text-apple-gray transition-colors" />
+            <div>
+              <span className="text-[13px] font-extrabold text-apple-success uppercase tracking-widest block">100% Free</span>
+              <span className="text-[15px] font-bold text-apple-darkGray">All Features Unlocked</span>
+            </div>
           </div>
+          <p className="text-[14px] font-medium text-apple-gray leading-relaxed">
+            No account required. Your settings and history are stored locally on your device.
+          </p>
         </div>
       </div>
 
@@ -160,7 +155,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, setSettings, onMe
       <div className="space-y-3 px-4">
         <h3 className="text-[13px] font-bold text-apple-gray uppercase tracking-[0.05em] px-1">System</h3>
         <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow">
-          <button 
+          <button
             onClick={() => setActiveTab('appearance')}
             className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors border-b border-black/[0.03]"
           >
@@ -172,48 +167,48 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, setSettings, onMe
             </div>
             <ChevronRight size={20} className="text-apple-gray/30" />
           </button>
-          <div className="w-full flex items-center justify-between p-6 border-b border-black/[0.03]">
+          <div className="w-full flex items-center justify-between p-6">
             <div className="flex items-center space-x-4">
                <div className="w-10 h-10 bg-apple-danger/10 rounded-xl flex items-center justify-center text-apple-danger">
                   <Smartphone size={20} />
                </div>
                <span className="font-bold text-[17px] text-apple-darkGray">Haptic Feedback</span>
             </div>
-            <div 
+            <div
               onClick={() => updateSettings({ hapticFeedback: !settings.hapticFeedback })}
               className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-colors duration-300 ${settings.hapticFeedback ? 'bg-apple-success' : 'bg-apple-gray/30'}`}
             >
               <div className={`w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 transform ${settings.hapticFeedback ? 'translate-x-6' : 'translate-x-0'}`} />
             </div>
           </div>
-          <button className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors">
-            <div className="flex items-center space-x-4">
-               <div className="w-10 h-10 bg-apple-success/10 rounded-xl flex items-center justify-center text-apple-success">
-                  <Bell size={20} />
+        </div>
+      </div>
+
+      {/* Data & Storage Section */}
+      <div className="space-y-3 px-4">
+        <h3 className="text-[13px] font-bold text-apple-gray uppercase tracking-[0.05em] px-1">Data & Storage</h3>
+        <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow">
+          <div className="p-6">
+            <div className="flex items-center space-x-4 mb-4">
+               <div className="w-10 h-10 bg-apple-blue/10 rounded-xl flex items-center justify-center text-apple-blue">
+                  <Database size={20} />
                </div>
-               <span className="font-bold text-[17px] text-apple-darkGray">Notifications</span>
+               <span className="font-bold text-[17px] text-apple-darkGray">Local Storage</span>
             </div>
-            <ChevronRight size={20} className="text-apple-gray/30" />
-          </button>
+            <p className="text-[14px] text-apple-gray font-medium leading-relaxed">
+              All your data is stored locally in your browser. Nothing is sent to external servers. Clear your browser data to reset the app.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* About Section */}
       <div className="space-y-3 px-4">
-        <h3 className="text-[13px] font-bold text-apple-gray uppercase tracking-[0.05em] px-1">Support & About</h3>
+        <h3 className="text-[13px] font-bold text-apple-gray uppercase tracking-[0.05em] px-1">About</h3>
         <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow">
-          <button className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors border-b border-black/[0.03]">
-            <div className="flex items-center space-x-4">
-               <div className="w-10 h-10 bg-apple-blue/10 rounded-xl flex items-center justify-center text-apple-blue">
-                  <HelpCircle size={20} />
-               </div>
-               <span className="font-bold text-apple-darkGray">Help Center</span>
-            </div>
-            <ChevronRight size={20} className="text-apple-gray/30" />
-          </button>
-          <button 
+          <button
             onClick={() => setActiveTab('about')}
-            className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors border-b border-black/[0.03]"
+            className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors"
           >
             <div className="flex items-center space-x-4">
                <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center text-apple-darkGray">
@@ -346,39 +341,47 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ settings, setSettings, onMe
   );
 
   const renderAbout = () => (
-     <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-400">
+     <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-400 px-4">
         <div className="flex flex-col items-center py-10 space-y-4">
            <div className="w-24 h-24 bg-apple-blue rounded-[32px] flex items-center justify-center shadow-xl shadow-apple-blue/20">
               <span className="text-4xl font-black text-white">S</span>
            </div>
            <div className="text-center space-y-1">
-              <h4 className="text-2xl font-bold tracking-tighter">Stepwise Unlimited</h4>
-              <p className="text-apple-gray font-medium">Empowering clarity through precision.</p>
+              <h4 className="text-2xl font-bold tracking-tighter">Stepwise</h4>
+              <p className="text-apple-gray font-medium">Math, made clear.</p>
            </div>
         </div>
 
-        <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow">
-           <button className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors border-b border-black/[0.03]">
-              <div className="flex items-center space-x-4">
-                 <Globe size={20} className="text-apple-blue" />
-                 <span className="font-bold text-apple-darkGray">Visit Website</span>
-              </div>
-              <ExternalLink size={18} className="text-apple-gray/30" />
-           </button>
-           <button className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors border-b border-black/[0.03]">
-              <div className="flex items-center space-x-4">
-                 <Mail size={20} className="text-purple-600" />
-                 <span className="font-bold text-apple-darkGray">Contact Support</span>
-              </div>
-              <ChevronRight size={18} className="text-apple-gray/30" />
-           </button>
-           <button className="w-full flex items-center justify-between p-6 hover:bg-apple-lightGray/50 transition-colors">
-              <div className="flex items-center space-x-4">
-                 <Star size={20} className="text-apple-warning" />
-                 <span className="font-bold text-apple-darkGray">Rate Stepwise</span>
-              </div>
-              <ChevronRight size={18} className="text-apple-gray/30" />
-           </button>
+        <div className="bg-white rounded-[24px] border border-black/[0.05] overflow-hidden apple-shadow p-6 space-y-4">
+           <h5 className="font-bold text-apple-darkGray text-lg">What is Stepwise?</h5>
+           <p className="text-[15px] text-apple-gray font-medium leading-relaxed">
+             Stepwise is a free, open math learning tool that helps you understand mathematical concepts step-by-step. Powered by AI, it breaks down complex problems into clear, digestible explanations.
+           </p>
+           <div className="pt-4 border-t border-black/[0.05] space-y-3">
+             <div className="flex items-center space-x-3">
+               <Zap size={18} className="text-apple-success" />
+               <span className="text-[14px] font-medium text-apple-darkGray">AI-powered step-by-step solutions</span>
+             </div>
+             <div className="flex items-center space-x-3">
+               <Sparkles size={18} className="text-purple-500" />
+               <span className="text-[14px] font-medium text-apple-darkGray">Scientific calculator with graphing</span>
+             </div>
+             <div className="flex items-center space-x-3">
+               <Heart size={18} className="text-apple-danger" />
+               <span className="text-[14px] font-medium text-apple-darkGray">Spaced repetition flashcards</span>
+             </div>
+           </div>
+        </div>
+
+        <div className="text-center space-y-2">
+           <p className="text-[13px] font-bold text-apple-gray/50">
+             100% Free • No Account Required • Privacy First
+           </p>
+           <p className="text-[12px] text-apple-gray/40 flex items-center justify-center space-x-1">
+             <span>Made with</span>
+             <Heart size={10} className="text-apple-danger fill-apple-danger" />
+             <span>for learners everywhere</span>
+           </p>
         </div>
      </div>
   );

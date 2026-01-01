@@ -1,19 +1,15 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Sparkles, 
-  Calculator, 
-  BrainCircuit, 
-  Camera, 
-  History, 
-  X, 
-  ChevronRight, 
-  Settings, 
-  User,
-  Star,
-  Layers,
-  ShieldCheck,
-  Zap
+import {
+  Sparkles,
+  Calculator,
+  BrainCircuit,
+  Camera,
+  X,
+  ChevronRight,
+  Settings,
+  Zap,
+  Heart
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -105,10 +101,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             })}
 
             <div className="pt-10 text-[11px] font-bold text-apple-gray/60 uppercase tracking-[0.2em] mb-4 ml-4">System</div>
-            <button className="w-full flex items-center space-x-4 px-4 py-4 rounded-2xl hover:bg-black/[0.04] text-apple-darkGray transition-all group">
-              <History size={20} strokeWidth={2.5} className="text-apple-gray group-hover:text-apple-blue" />
-              <span className="text-[16px] font-bold tracking-tight">Recent Insights</span>
-            </button>
             <Link
               to="/settings"
               onClick={onClose}
@@ -121,31 +113,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </Link>
           </nav>
 
-          {/* User Profile / Footer */}
+          {/* Footer */}
           <div className="p-6 mt-auto border-t border-black/[0.05]">
-            <div className="bg-gradient-to-tr from-apple-success/[0.08] to-apple-blue/[0.08] p-5 rounded-[24px] border border-apple-success/10 mb-6 group cursor-pointer transition-all shadow-sm">
-              <div className="flex items-center justify-between mb-3">
+            <div className="bg-gradient-to-tr from-apple-success/[0.08] to-apple-blue/[0.08] p-5 rounded-[24px] border border-apple-success/10 shadow-sm">
+              <div className="flex items-center space-x-3 mb-3">
                 <div className="w-8 h-8 bg-apple-success/10 rounded-lg flex items-center justify-center">
-                  <ShieldCheck size={16} className="text-apple-success" />
+                  <Zap size={16} className="text-apple-success" />
                 </div>
-                <span className="text-[10px] font-extrabold text-apple-success uppercase tracking-widest">Full Access</span>
+                <span className="text-[11px] font-extrabold text-apple-success uppercase tracking-widest">100% Free</span>
               </div>
-              <p className="text-[13px] font-bold text-apple-darkGray leading-relaxed pr-2">
-                All premium features are unlocked for your account.
+              <p className="text-[13px] font-bold text-apple-darkGray leading-relaxed">
+                All features unlocked. No account required. Your data stays on your device.
               </p>
             </div>
 
-            <div className="flex items-center justify-between p-4 rounded-2xl bg-black/[0.03] border border-black/[0.02] hover:bg-black/[0.05] transition-all cursor-pointer">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-apple-blue flex items-center justify-center text-white shadow-md border-2 border-white">
-                  <User size={20} strokeWidth={2.5} />
-                </div>
-                <div className="flex flex-col -space-y-0.5">
-                  <span className="text-[15px] font-bold text-apple-darkGray">John Smith</span>
-                  <span className="text-[11px] font-bold text-apple-success uppercase tracking-tighter">Master Member</span>
-                </div>
-              </div>
-              <ChevronRight size={16} className="text-apple-gray/40" />
+            <div className="mt-4 flex items-center justify-center space-x-1 text-apple-gray text-[11px] font-medium">
+              <span>Made with</span>
+              <Heart size={12} className="text-apple-danger fill-apple-danger" />
+              <span>for learners everywhere</span>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Added Sparkles to the imports below to fix the "Cannot find name 'Sparkles'" error
 import { ChevronLeft, ChevronRight, Menu, X, Check, Globe, Moon, Sun, Smartphone, Bell, Info, Mail, Star, ExternalLink, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
-import { AppSettings } from '../App';
+import { AppSettings } from './App';
 
 interface SettingsPageProps {
   settings: AppSettings;

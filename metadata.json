@@ -1,0 +1,7 @@
+{
+  "name": "Stepwise",
+  "description": "A production-grade mathematics clarity platform offering AI-powered step-by-step solutions, an advanced graphing calculator, and a spaced-repetition daily recall system for mastering math concepts.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

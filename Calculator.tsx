@@ -12,7 +12,7 @@ import {
   ChevronLeft,
   Menu
 } from 'lucide-react';
-import { evaluateExpression, generateGraphData } from '../utils/mathHelpers';
+import { evaluateExpression, generateGraphData } from './mathHelpers';
 
 const math = create(all);
 

@@ -16,9 +16,9 @@ import {
   Share2,
   Lightbulb
 } from 'lucide-react';
-import { solveMathProblem } from '../services/gemini';
-import { SolverResult } from '../types';
-import MathRenderer from '../components/MathRenderer';
+import { solveMathProblem } from './gemini';
+import { SolverResult } from './types';
+import MathRenderer from './MathRenderer';
 
 interface SolverProps {
   onMenuClick: () => void;

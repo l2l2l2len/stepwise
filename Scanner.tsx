@@ -10,7 +10,7 @@ import {
   X,
   BrainCircuit
 } from 'lucide-react';
-import { solveMathProblemFromImage } from '../services/gemini';
+import { solveMathProblemFromImage } from './gemini';
 
 interface ScannerProps {
   onMenuClick: () => void;

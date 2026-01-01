@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import Solver from './pages/Solver';
-import CalculatorPage from './pages/Calculator';
-import DailyRecall from './pages/DailyRecall';
-import Scanner from './pages/Scanner';
-import SettingsPage from './pages/Settings';
-import Onboarding from './pages/Onboarding';
+import Sidebar from './Sidebar';
+import Solver from './Solver';
+import CalculatorPage from './Calculator';
+import DailyRecall from './DailyRecall';
+import Scanner from './Scanner';
+import SettingsPage from './Settings';
+import Onboarding from './Onboarding';
 
 export interface AppSettings {
   decimalSign: 'dot' | 'comma';

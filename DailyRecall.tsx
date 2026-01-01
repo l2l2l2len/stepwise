@@ -14,10 +14,10 @@ import {
   ChevronLeft,
   Menu
 } from 'lucide-react';
-import { RecallCard } from '../types';
-import { calculateSM2 } from '../utils/spacedRepetition';
-import MixedContent from '../components/MixedContent';
-import MathRenderer from '../components/MathRenderer';
+import { RecallCard } from './types';
+import { calculateSM2 } from './spacedRepetition';
+import MixedContent from './MixedContent';
+import MathRenderer from './MathRenderer';
 
 const INITIAL_CARDS: Partial<RecallCard>[] = [
   { id: '1', type: 'formula', category: 'Geometry', front: 'The Quadratic Formula', back: 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}' },

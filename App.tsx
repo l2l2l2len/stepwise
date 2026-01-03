@@ -1,22 +1,12 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import ErrorBoundary from './pages/ErrorBoundary';
-
-// Lazy load pages for code splitting
-const Solver = lazy(() => import('./Solver'));
-const CalculatorPage = lazy(() => import('./Calculator'));
-const DailyRecall = lazy(() => import('./DailyRecall'));
-const Scanner = lazy(() => import('./Scanner'));
-const SettingsPage = lazy(() => import('./Settings'));
-const Onboarding = lazy(() => import('./Onboarding'));
-const About = lazy(() => import('./pages/About'));
-const Contact = lazy(() => import('./pages/Contact'));
-const Terms = lazy(() => import('./pages/Terms'));
-const Privacy = lazy(() => import('./pages/Privacy'));
-const FAQ = lazy(() => import('./pages/FAQ'));
-const HowItWorks = lazy(() => import('./pages/HowItWorks'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+import Solver from './Solver';
+import CalculatorPage from './Calculator';
+import DailyRecall from './DailyRecall';
+import Scanner from './Scanner';
+import SettingsPage from './Settings';
+import Onboarding from './Onboarding';
 
 export interface AppSettings {
   decimalSign: 'dot' | 'comma';
@@ -38,16 +28,6 @@ const DEFAULT_SETTINGS: AppSettings = {
   hapticFeedback: true
 };
 
-// Loading spinner component
-const LoadingSpinner: React.FC = () => (
-  <div className="flex-1 flex items-center justify-center bg-[#FBFBFD] dark:bg-[#121212] min-h-screen">
-    <div className="flex flex-col items-center space-y-4">
-      <div className="w-12 h-12 border-4 border-apple-blue/20 border-t-apple-blue rounded-full animate-spin" />
-      <span className="text-apple-gray dark:text-[#A1A1A6] font-medium">Loading...</span>
-    </div>
-  </div>
-);
-
 const AppContent: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean>(() => {
@@ -55,12 +35,8 @@ const AppContent: React.FC = () => {
   });
 
   const [settings, setSettings] = useState<AppSettings>(() => {
-    try {
-      const saved = localStorage.getItem('stepwise_settings');
-      return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
-    } catch {
-      return DEFAULT_SETTINGS;
-    }
+    const saved = localStorage.getItem('stepwise_settings');
+    return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
   });
 
   // Track system dark mode preference
@@ -79,21 +55,12 @@ const AppContent: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Save settings to localStorage with error handling
   useEffect(() => {
-    try {
-      localStorage.setItem('stepwise_settings', JSON.stringify(settings));
-    } catch (e) {
-      console.warn('Failed to save settings to localStorage:', e);
-    }
+    localStorage.setItem('stepwise_settings', JSON.stringify(settings));
   }, [settings]);
 
   const completeOnboarding = () => {
-    try {
-      localStorage.setItem('stepwise_onboarding_complete', 'true');
-    } catch (e) {
-      console.warn('Failed to save onboarding status:', e);
-    }
+    localStorage.setItem('stepwise_onboarding_complete', 'true');
     setHasSeenOnboarding(true);
   };
 
@@ -108,8 +75,6 @@ const AppContent: React.FC = () => {
   // Determine if dark mode should be applied
   const isDarkMode = settings.theme === 'dark' || (settings.theme === 'system' && systemPrefersDark);
 
-  const menuClickHandler = () => setIsSidebarOpen(true);
-
   return (
     <div className={`min-h-screen flex bg-[#FBFBFD] overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
       {!isOnboarding && (
@@ -121,23 +86,14 @@ const AppContent: React.FC = () => {
       )}
 
       <main className={`flex-1 flex flex-col relative transition-all duration-300 ${!isScanner && !isOnboarding ? 'md:pl-72' : ''}`}>
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/onboarding" element={<Onboarding onComplete={completeOnboarding} />} />
-            <Route path="/" element={<Scanner onMenuClick={menuClickHandler} />} />
-            <Route path="/solver" element={<Solver onMenuClick={menuClickHandler} />} />
-            <Route path="/calculator" element={<CalculatorPage onMenuClick={menuClickHandler} />} />
-            <Route path="/recall" element={<DailyRecall onMenuClick={menuClickHandler} />} />
-            <Route path="/settings" element={<SettingsPage settings={settings} setSettings={setSettings} onMenuClick={menuClickHandler} />} />
-            <Route path="/about" element={<About onMenuClick={menuClickHandler} />} />
-            <Route path="/contact" element={<Contact onMenuClick={menuClickHandler} />} />
-            <Route path="/terms" element={<Terms onMenuClick={menuClickHandler} />} />
-            <Route path="/privacy" element={<Privacy onMenuClick={menuClickHandler} />} />
-            <Route path="/faq" element={<FAQ onMenuClick={menuClickHandler} />} />
-            <Route path="/how-it-works" element={<HowItWorks onMenuClick={menuClickHandler} />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route path="/onboarding" element={<Onboarding onComplete={completeOnboarding} />} />
+          <Route path="/" element={<Scanner onMenuClick={() => setIsSidebarOpen(true)} />} />
+          <Route path="/solver" element={<Solver onMenuClick={() => setIsSidebarOpen(true)} />} />
+          <Route path="/calculator" element={<CalculatorPage onMenuClick={() => setIsSidebarOpen(true)} />} />
+          <Route path="/recall" element={<DailyRecall onMenuClick={() => setIsSidebarOpen(true)} />} />
+          <Route path="/settings" element={<SettingsPage settings={settings} setSettings={setSettings} onMenuClick={() => setIsSidebarOpen(true)} />} />
+        </Routes>
       </main>
     </div>
   );
@@ -145,11 +101,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <ErrorBoundary>
-      <HashRouter>
-        <AppContent />
-      </HashRouter>
-    </ErrorBoundary>
+    <HashRouter>
+      <AppContent />
+    </HashRouter>
   );
 };
 

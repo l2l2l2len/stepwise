@@ -9,10 +9,7 @@ import {
   ChevronRight,
   Settings,
   Zap,
-  Heart,
-  HelpCircle,
-  Info,
-  BookOpen
+  Heart
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -31,32 +28,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     { path: '/recall', label: 'Daily Recall', icon: BrainCircuit, color: 'text-apple-warning' },
   ];
 
-  const helpItems = [
-    { path: '/how-it-works', label: 'How It Works', icon: BookOpen },
-    { path: '/faq', label: 'FAQ', icon: HelpCircle },
-    { path: '/about', label: 'About', icon: Info },
-  ];
-
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div
+        <div 
           className="fixed inset-0 bg-black/15 backdrop-blur-sm z-[150] md:hidden transition-opacity duration-500"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar Container */}
-      <aside
+      <aside 
         className={`fixed inset-y-0 left-0 z-[200] w-72 apple-blur border-r border-black/[0.05] shadow-[20px_0_60px_rgba(0,0,0,0.06)] transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex flex-col h-full overflow-hidden bg-white/80 dark:bg-[#1A1A1A]/95">
-
+        <div className="flex flex-col h-full overflow-hidden bg-white/80">
+          
           {/* Top Branding Section */}
           <div className="p-8 pb-4 pt-12 md:pt-8">
             <div className="flex items-center justify-between">
@@ -65,11 +56,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <span className="font-extrabold text-white text-xl">S</span>
                 </div>
                 <div className="flex flex-col -space-y-1">
-                  <span className="font-bold text-xl tracking-tighter text-apple-darkGray dark:text-white">Stepwise</span>
+                  <span className="font-bold text-xl tracking-tighter text-apple-darkGray">Stepwise</span>
                   <span className="text-[11px] font-extrabold text-apple-success uppercase tracking-[0.2em]">Unlimited</span>
                 </div>
               </div>
-              <button onClick={onClose} className="md:hidden p-2 text-apple-gray hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={onClose} className="md:hidden p-2 text-apple-gray hover:bg-black/5 rounded-full transition-colors">
                 <X size={24} strokeWidth={2.5} />
               </button>
             </div>
@@ -77,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
           {/* Navigation Items */}
           <nav className="flex-1 px-4 py-8 space-y-1 overflow-y-auto">
-            <div className="text-[11px] font-bold text-apple-gray/60 dark:text-[#A1A1A6]/60 uppercase tracking-[0.2em] mb-4 ml-4">Library</div>
+            <div className="text-[11px] font-bold text-apple-gray/60 uppercase tracking-[0.2em] mb-4 ml-4">Library</div>
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);
@@ -87,16 +78,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   to={item.path}
                   onClick={onClose}
                   className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all duration-300 group relative overflow-hidden ${
-                    active
-                      ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25'
-                      : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-apple-darkGray dark:text-white'
+                    active 
+                      ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' 
+                      : 'hover:bg-black/[0.04] text-apple-darkGray'
                   }`}
                 >
                   <div className="flex items-center space-x-4 relative z-10">
                     <div className={`${active ? 'text-white' : item.color} transition-colors`}>
                       <Icon size={20} strokeWidth={2.5} />
                     </div>
-                    <span className={`text-[16px] font-bold tracking-tight ${active ? 'text-white' : 'text-apple-darkGray dark:text-white'}`}>
+                    <span className={`text-[16px] font-bold tracking-tight ${active ? 'text-white' : 'text-apple-darkGray'}`}>
                       {item.label}
                     </span>
                   </div>
@@ -109,40 +100,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               );
             })}
 
-            <div className="pt-10 text-[11px] font-bold text-apple-gray/60 dark:text-[#A1A1A6]/60 uppercase tracking-[0.2em] mb-4 ml-4">System</div>
+            <div className="pt-10 text-[11px] font-bold text-apple-gray/60 uppercase tracking-[0.2em] mb-4 ml-4">System</div>
             <Link
               to="/settings"
               onClick={onClose}
               className={`w-full flex items-center space-x-4 px-4 py-4 rounded-2xl transition-all group ${
-                isActive('/settings') ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-apple-darkGray dark:text-white'
+                isActive('/settings') ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' : 'hover:bg-black/[0.04] text-apple-darkGray'
               }`}
             >
               <Settings size={20} strokeWidth={2.5} className={`${isActive('/settings') ? 'text-white' : 'text-apple-gray group-hover:text-apple-blue'}`} />
               <span className="text-[16px] font-bold tracking-tight">Settings</span>
             </Link>
-
-            <div className="pt-6 text-[11px] font-bold text-apple-gray/60 dark:text-[#A1A1A6]/60 uppercase tracking-[0.2em] mb-4 ml-4">Help</div>
-            {helpItems.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.path);
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={onClose}
-                  className={`w-full flex items-center space-x-4 px-4 py-3 rounded-2xl transition-all group ${
-                    active ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' : 'hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-apple-darkGray dark:text-white'
-                  }`}
-                >
-                  <Icon size={18} strokeWidth={2.5} className={`${active ? 'text-white' : 'text-apple-gray group-hover:text-apple-blue'}`} />
-                  <span className="text-[15px] font-bold tracking-tight">{item.label}</span>
-                </Link>
-              );
-            })}
           </nav>
 
           {/* Footer */}
-          <div className="p-6 mt-auto border-t border-black/[0.05] dark:border-white/[0.05]">
+          <div className="p-6 mt-auto border-t border-black/[0.05]">
             <div className="bg-gradient-to-tr from-apple-success/[0.08] to-apple-blue/[0.08] p-5 rounded-[24px] border border-apple-success/10 shadow-sm">
               <div className="flex items-center space-x-3 mb-3">
                 <div className="w-8 h-8 bg-apple-success/10 rounded-lg flex items-center justify-center">
@@ -150,21 +122,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 </div>
                 <span className="text-[11px] font-extrabold text-apple-success uppercase tracking-widest">100% Free</span>
               </div>
-              <p className="text-[13px] font-bold text-apple-darkGray dark:text-white leading-relaxed">
+              <p className="text-[13px] font-bold text-apple-darkGray leading-relaxed">
                 All features unlocked. No account required. Your data stays on your device.
               </p>
             </div>
 
-            {/* Footer Links */}
-            <div className="mt-4 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[11px] text-apple-gray dark:text-[#A1A1A6]">
-              <Link to="/privacy" onClick={onClose} className="hover:text-apple-blue transition-colors">Privacy</Link>
-              <span>·</span>
-              <Link to="/terms" onClick={onClose} className="hover:text-apple-blue transition-colors">Terms</Link>
-              <span>·</span>
-              <Link to="/contact" onClick={onClose} className="hover:text-apple-blue transition-colors">Contact</Link>
-            </div>
-
-            <div className="mt-3 flex items-center justify-center space-x-1 text-apple-gray dark:text-[#A1A1A6] text-[11px] font-medium">
+            <div className="mt-4 flex items-center justify-center space-x-1 text-apple-gray text-[11px] font-medium">
               <span>Made with</span>
               <Heart size={12} className="text-apple-danger fill-apple-danger" />
               <span>for learners everywhere</span>

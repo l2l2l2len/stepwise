@@ -116,7 +116,7 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-[50] flex flex-col overflow-hidden select-none">
+    <div className="fixed inset-0 bg-enterprise-navy z-[50] flex flex-col overflow-hidden select-none">
       {/* Live Video Feed */}
       <video
         ref={videoRef}
@@ -126,105 +126,118 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
       />
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Aesthetic Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 pointer-events-none" />
+      {/* Gradient Overlays - Enterprise Style */}
+      <div className="absolute inset-0 bg-gradient-to-b from-enterprise-navy/80 via-transparent to-enterprise-navy/80 pointer-events-none" />
+
+      {/* Enterprise Glow Effects */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-enterprise-blue/10 to-transparent blur-3xl pointer-events-none" />
 
       {/* Main Scanner Interface */}
       <div className="absolute inset-0 flex flex-col pointer-events-none z-[60]">
 
         {/* Top Actions Row */}
-        <div className="flex justify-between items-center p-8 pt-12 md:pt-10">
+        <div className="flex justify-between items-center p-6 pt-12 md:pt-8">
           <button
             onClick={onMenuClick}
-            className="p-3.5 text-white pointer-events-auto bg-black/20 backdrop-blur-xl hover:bg-white/10 rounded-2xl transition-all active:scale-90 border border-white/10 flex items-center space-x-2"
+            className="p-3 text-white pointer-events-auto bg-white/10 backdrop-blur-xl hover:bg-white/20 rounded-xl transition-all active:scale-90 border border-white/10 flex items-center space-x-2"
           >
-            <Menu size={24} strokeWidth={2.5} />
-            <span className="font-bold text-[15px] hidden sm:block">Menu</span>
+            <Menu size={22} strokeWidth={2.5} />
+            <span className="font-semibold text-[14px] hidden sm:block">Menu</span>
           </button>
 
           <div className="flex flex-col items-center">
-            <div className="w-9 h-9 bg-apple-blue rounded-[10px] flex items-center justify-center shadow-lg border border-white/20 mb-1">
-              <span className="font-extrabold text-white text-sm tracking-tight">S</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-enterprise-blue to-enterprise-purple rounded-xl flex items-center justify-center shadow-lg shadow-enterprise-blue/30 mb-1">
+              <span className="font-bold text-white text-lg">S</span>
             </div>
-            <span className="text-white text-[10px] font-extrabold uppercase tracking-[0.3em] opacity-60">Stepwise</span>
+            <span className="text-white text-[10px] font-semibold uppercase tracking-widest opacity-60">Stepwise</span>
           </div>
 
           <button
             onClick={() => navigate('/solver')}
-            className="p-3.5 text-white pointer-events-auto bg-black/20 backdrop-blur-xl hover:bg-white/10 rounded-2xl transition-all active:scale-90 border border-white/10 flex items-center space-x-2"
+            className="p-3 text-white pointer-events-auto bg-white/10 backdrop-blur-xl hover:bg-white/20 rounded-xl transition-all active:scale-90 border border-white/10 flex items-center space-x-2"
           >
-            <Type size={24} strokeWidth={2.5} />
-            <span className="font-bold text-[15px] hidden sm:block">Type</span>
+            <Type size={22} strokeWidth={2.5} />
+            <span className="font-semibold text-[14px] hidden sm:block">Type</span>
           </button>
         </div>
 
         {/* Viewfinder Area */}
         <div className="flex-1 flex flex-col items-center justify-center relative">
 
-          <div className="absolute top-1/4 px-8 py-3 bg-black/40 backdrop-blur-2xl rounded-full border border-white/10 flex items-center space-x-2 animate-in fade-in slide-in-from-top-4">
-            <Sparkles size={14} className="text-apple-blue" strokeWidth={3} />
-            <span className="text-white text-[13px] font-bold tracking-tight">Frame the problem clearly</span>
+          <div className="absolute top-1/4 px-6 py-2.5 bg-white/10 backdrop-blur-xl rounded-full border border-white/10 flex items-center space-x-2 animate-in fade-in slide-in-from-top-4">
+            <Sparkles size={14} className="text-enterprise-blueLight" strokeWidth={2.5} />
+            <span className="text-white text-[13px] font-medium">Frame the problem clearly</span>
           </div>
 
-          {/* Central Brackets */}
+          {/* Central Viewfinder - Modern Enterprise Style */}
           <div className="relative w-72 h-48 md:w-[500px] md:h-72">
-            <div className="absolute top-0 left-0 w-12 h-12 border-t-[4px] border-l-[4px] border-white rounded-tl-3xl shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
-            <div className="absolute top-0 right-0 w-12 h-12 border-t-[4px] border-r-[4px] border-white rounded-tr-3xl shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
-            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-[4px] border-l-[4px] border-white rounded-bl-3xl shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
-            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-[4px] border-r-[4px] border-white rounded-br-3xl shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
+            {/* Corner Brackets with Gradient */}
+            <div className="absolute top-0 left-0 w-14 h-14 border-t-[3px] border-l-[3px] border-enterprise-blue rounded-tl-2xl" />
+            <div className="absolute top-0 right-0 w-14 h-14 border-t-[3px] border-r-[3px] border-enterprise-blue rounded-tr-2xl" />
+            <div className="absolute bottom-0 left-0 w-14 h-14 border-b-[3px] border-l-[3px] border-enterprise-purple rounded-bl-2xl" />
+            <div className="absolute bottom-0 right-0 w-14 h-14 border-b-[3px] border-r-[3px] border-enterprise-purple rounded-br-2xl" />
 
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <div className="w-10 h-[1px] bg-white" />
-              <div className="h-10 w-[1px] bg-white absolute" />
+            {/* Center Crosshair */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-30">
+              <div className="w-8 h-[1px] bg-white" />
+              <div className="h-8 w-[1px] bg-white absolute" />
             </div>
+
+            {/* Scanning Animation */}
+            {isCapturing && (
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="w-full h-1 bg-gradient-to-r from-transparent via-enterprise-blue to-transparent animate-pulse"
+                     style={{ animation: 'scan 1.5s ease-in-out infinite' }} />
+              </div>
+            )}
           </div>
         </div>
 
         {/* Shutter & Controls Container */}
-        <div className="p-10 pb-16 md:pb-12 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center space-y-12">
+        <div className="p-8 pb-14 md:pb-10 bg-gradient-to-t from-enterprise-navy/90 to-transparent flex flex-col items-center space-y-10">
 
           <div className="w-full max-w-sm flex items-end justify-between px-2">
             <button
               onClick={() => navigate('/calculator')}
-              className="pointer-events-auto flex flex-col items-center space-y-3 group active:scale-95 transition-all"
+              className="pointer-events-auto flex flex-col items-center space-y-2 group active:scale-95 transition-all"
             >
-              <div className="w-14 h-14 bg-white/10 backdrop-blur-2xl rounded-2xl flex items-center justify-center text-white border border-white/10 group-hover:bg-white/20 transition-colors">
-                <Calculator size={26} strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-xl flex items-center justify-center text-white border border-white/10 group-hover:bg-white/20 transition-colors">
+                <Calculator size={24} strokeWidth={2} />
               </div>
-              <span className="text-white/60 text-[10px] font-extrabold uppercase tracking-[0.25em]">Calc</span>
+              <span className="text-white/50 text-[10px] font-semibold uppercase tracking-wider">Calc</span>
             </button>
 
-            {/* Premium Shutter Button */}
+            {/* Premium Shutter Button - Enterprise Gradient */}
             <div className="relative flex flex-col items-center">
               <button
                 onClick={capturePhoto}
                 disabled={isCapturing}
                 className="pointer-events-auto relative group active:scale-90 transition-all duration-300"
               >
-                <div className="w-24 h-24 rounded-full border-[5px] border-white p-2 flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.15)]">
-                  <div className={`w-full h-full rounded-full transition-all duration-500 shadow-inner ${isCapturing ? 'bg-apple-gray scale-75' : 'bg-white hover:scale-95'}`} />
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-enterprise-blue to-enterprise-purple p-1 flex items-center justify-center shadow-lg shadow-enterprise-blue/30">
+                  <div className={`w-full h-full rounded-full transition-all duration-500 ${isCapturing ? 'bg-enterprise-purple/80 scale-90' : 'bg-white hover:scale-95'}`} />
                 </div>
                 {isCapturing && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 border-[5px] border-apple-blue/30 border-t-apple-blue rounded-full animate-spin" />
+                    <div className="w-10 h-10 border-[3px] border-white/30 border-t-white rounded-full animate-spin" />
                   </div>
                 )}
               </button>
-              <span className="text-white text-[11px] font-extrabold uppercase tracking-[0.4em] mt-5">Analyze</span>
+              <span className="text-white text-[11px] font-semibold uppercase tracking-widest mt-4">Capture</span>
             </div>
 
             <button
               onClick={() => navigate('/recall')}
-              className="pointer-events-auto flex flex-col items-center space-y-3 group active:scale-95 transition-all"
+              className="pointer-events-auto flex flex-col items-center space-y-2 group active:scale-95 transition-all"
             >
-              <div className="w-14 h-14 bg-white/10 backdrop-blur-2xl rounded-2xl flex items-center justify-center text-white border border-white/10 group-hover:bg-white/20 transition-colors">
-                <BrainCircuit size={26} strokeWidth={2.5} />
+              <div className="w-14 h-14 bg-white/10 backdrop-blur-xl rounded-xl flex items-center justify-center text-white border border-white/10 group-hover:bg-white/20 transition-colors">
+                <BrainCircuit size={24} strokeWidth={2} />
               </div>
-              <span className="text-white/60 text-[10px] font-extrabold uppercase tracking-[0.25em]">Recall</span>
+              <span className="text-white/50 text-[10px] font-semibold uppercase tracking-wider">Recall</span>
             </button>
           </div>
 
-          <div className="flex items-center space-x-20">
+          <div className="flex items-center space-x-16">
             <input
               ref={fileInputRef}
               type="file"
@@ -234,30 +247,31 @@ const Scanner: React.FC<ScannerProps> = ({ onMenuClick }) => {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="pointer-events-auto p-4 text-white/50 hover:text-white transition-all active:scale-90 flex flex-col items-center"
+              className="pointer-events-auto p-3 text-white/50 hover:text-white transition-all active:scale-90 flex flex-col items-center"
             >
-              <ImageIcon size={28} strokeWidth={2.5} />
+              <ImageIcon size={24} strokeWidth={2} />
             </button>
             <button
               onClick={() => setFlashOn(!flashOn)}
-              className={`pointer-events-auto p-4 transition-all active:scale-90 rounded-2xl flex flex-col items-center ${flashOn ? 'bg-apple-warning text-black shadow-[0_0_20px_rgba(255,149,0,0.4)]' : 'text-white/50 hover:text-white'}`}
+              className={`pointer-events-auto p-3 transition-all active:scale-90 rounded-xl flex flex-col items-center ${flashOn ? 'bg-enterprise-warning text-enterprise-navy' : 'text-white/50 hover:text-white'}`}
             >
-              <Zap size={28} strokeWidth={2.5} fill={flashOn ? "currentColor" : "none"} />
+              <Zap size={24} strokeWidth={2} fill={flashOn ? "currentColor" : "none"} />
             </button>
           </div>
         </div>
       </div>
 
+      {/* Error Toast - Enterprise Style */}
       {error && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 w-[90%] max-w-md apple-blur bg-white/95 dark:bg-gray-900/95 border border-black/5 dark:border-white/10 p-5 rounded-[24px] shadow-2xl flex items-center justify-between z-[200] animate-in slide-in-from-bottom-8">
-          <div className="flex items-center space-x-4 text-apple-darkGray dark:text-white">
-            <div className="w-10 h-10 rounded-full bg-apple-danger/10 flex items-center justify-center text-apple-danger">
-              <X size={20} strokeWidth={3} />
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 w-[90%] max-w-md enterprise-glass bg-white/95 border border-enterprise-border p-5 rounded-2xl shadow-enterprise-lg flex items-center justify-between z-[200] animate-in slide-in-from-bottom-8">
+          <div className="flex items-center space-x-4 text-enterprise-text">
+            <div className="w-10 h-10 rounded-xl bg-enterprise-danger/10 flex items-center justify-center text-enterprise-danger">
+              <X size={20} strokeWidth={2.5} />
             </div>
-            <span className="text-[15px] font-bold pr-6">{error}</span>
+            <span className="text-[14px] font-medium pr-4">{error}</span>
           </div>
-          <button onClick={() => setError(null)} className="p-2 text-apple-gray hover:text-apple-darkGray dark:hover:text-white">
-            <X size={24} />
+          <button onClick={() => setError(null)} className="p-2 text-enterprise-textMuted hover:text-enterprise-text rounded-lg">
+            <X size={20} />
           </button>
         </div>
       )}

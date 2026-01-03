@@ -76,7 +76,7 @@ const AppContent: React.FC = () => {
   const isDarkMode = settings.theme === 'dark' || (settings.theme === 'system' && systemPrefersDark);
 
   return (
-    <div className={`min-h-screen flex bg-enterprise-bg overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`min-h-screen flex bg-[#FBFBFD] overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
       {!isOnboarding && (
         <Sidebar
           isOpen={isSidebarOpen}

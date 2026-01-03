@@ -62,32 +62,34 @@ const CalculatorPage: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) 
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-apple-bg overflow-hidden">
-      {/* Top Navigation Bar */}
-      <div className="flex items-center justify-between px-6 py-4 bg-white/70 backdrop-blur-2xl border-b border-black/[0.05] sticky top-0 z-40">
-        <div className="flex items-center space-x-2">
+    <div className="flex-1 flex flex-col h-full bg-enterprise-bg overflow-hidden">
+      {/* Enterprise Top Navigation Bar */}
+      <div className="enterprise-nav flex items-center justify-between px-6 py-4">
+        <div className="flex items-center space-x-3">
           <button
             onClick={() => navigate(-1)}
-            className="p-2.5 text-apple-blue hover:bg-apple-blue/5 rounded-full transition-all flex items-center space-x-1 group"
+            className="p-2.5 text-enterprise-blue hover:bg-enterprise-blue/10 rounded-xl transition-all flex items-center space-x-1 group"
           >
-            <ChevronLeft size={24} strokeWidth={2.5} className="group-active:-translate-x-1 transition-transform" />
-            <span className="font-bold text-[17px] hidden sm:inline">Back</span>
+            <ChevronLeft size={22} strokeWidth={2.5} className="group-active:-translate-x-1 transition-transform" />
+            <span className="font-semibold text-[15px] hidden sm:inline">Back</span>
           </button>
 
-          <div className="h-6 w-px bg-black/[0.08] mx-2 hidden md:block" />
+          <div className="h-6 w-px bg-enterprise-border mx-2 hidden md:block" />
 
-          <button onClick={onMenuClick} className="p-2.5 text-apple-darkGray hover:bg-black/5 rounded-full md:hidden">
+          <button onClick={onMenuClick} className="p-2.5 text-enterprise-textMuted hover:bg-enterprise-bgAlt rounded-xl md:hidden">
             <Menu size={22} strokeWidth={2.5} />
           </button>
 
           <div className="hidden md:flex items-center space-x-2 ml-2">
-            <CalcIcon size={18} className="text-apple-success" strokeWidth={2.5} />
-            <span className="font-bold text-apple-darkGray tracking-tight text-[17px]">Scientific Engine</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-enterprise-blue to-enterprise-purple rounded-lg flex items-center justify-center">
+              <CalcIcon size={16} className="text-white" strokeWidth={2.5} />
+            </div>
+            <span className="font-semibold text-enterprise-text text-[15px]">Calculator</span>
           </div>
         </div>
         <button
           onClick={() => setInput('')}
-          className="p-2.5 text-apple-gray hover:text-apple-darkGray transition-all"
+          className="p-2.5 text-enterprise-textMuted hover:text-enterprise-text hover:bg-enterprise-bgAlt rounded-xl transition-all"
         >
           <RotateCcw size={20} strokeWidth={2.5} />
         </button>
@@ -95,23 +97,25 @@ const CalculatorPage: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) 
 
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Left: Keypad & Input */}
-        <div className="w-full md:w-1/2 lg:w-[500px] flex flex-col bg-white border-r border-black/[0.05] p-8 space-y-8 overflow-y-auto">
+        <div className="w-full md:w-1/2 lg:w-[480px] flex flex-col bg-white border-r border-enterprise-border p-6 space-y-6 overflow-y-auto">
 
-          <div className="apple-card p-8 min-h-[200px] flex flex-col justify-between shadow-apple-soft border-apple-success/10 bg-apple-bg/50">
+          {/* Display Card */}
+          <div className="enterprise-card p-6 min-h-[160px] flex flex-col justify-between border-enterprise-blue/10">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter expression..."
-              className="bg-transparent border-none outline-none w-full text-2xl font-bold resize-none placeholder-apple-gray/30 text-apple-darkGray leading-relaxed"
-              rows={3}
+              className="bg-transparent border-none outline-none w-full text-xl font-semibold resize-none placeholder-enterprise-textLight text-enterprise-text leading-relaxed"
+              rows={2}
             />
             <div className="flex justify-between items-end pt-4">
-              <div className="text-[12px] text-apple-danger font-bold uppercase tracking-wider">{error && 'Syntax Error'}</div>
-              <div className="text-5xl font-extrabold text-apple-success tracking-tighter mono overflow-x-auto">{result || '0'}</div>
+              <div className="text-[12px] text-enterprise-danger font-medium uppercase tracking-wide">{error && 'Syntax Error'}</div>
+              <div className="text-4xl font-bold text-enterprise-blue tracking-tight font-mono overflow-x-auto">{result || '0'}</div>
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-4">
+          {/* Keypad Grid */}
+          <div className="grid grid-cols-4 gap-3">
             {buttons.flat().map((btn) => (
               <button
                 key={btn}
@@ -121,11 +125,11 @@ const CalculatorPage: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) 
                     if (result) setHistory(prev => [input + ' = ' + result, ...prev.slice(0, 4)]);
                   } else setInput(prev => prev + btn);
                 }}
-                className={`py-6 rounded-2xl font-bold text-xl transition-all active:scale-95 shadow-sm ${btn === '='
-                  ? 'bg-apple-success text-white shadow-lg shadow-apple-success/20'
+                className={`py-5 rounded-xl font-semibold text-lg transition-all active:scale-95 ${btn === '='
+                  ? 'bg-gradient-to-br from-enterprise-blue to-enterprise-purple text-white shadow-lg shadow-enterprise-blue/20'
                   : ['/', '*', '-', '+', 'C'].includes(btn)
-                    ? 'bg-apple-success/10 text-apple-success hover:bg-apple-success/20'
-                    : 'bg-apple-bg border border-black/[0.03] text-apple-darkGray hover:bg-black/[0.02]'
+                    ? 'bg-enterprise-blue/10 text-enterprise-blue hover:bg-enterprise-blue/20'
+                    : 'bg-enterprise-bgAlt border border-enterprise-border text-enterprise-text hover:bg-enterprise-border/50'
                   }`}
               >
                 {btn}
@@ -133,74 +137,88 @@ const CalculatorPage: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) 
             ))}
           </div>
 
-          <div className="apple-card p-6 bg-apple-bg/30 border-black/[0.02]">
+          {/* Calculation Breakdown */}
+          <div className="enterprise-card p-5 border-enterprise-border">
             <button
               onClick={() => setShowSteps(!showSteps)}
-              className="w-full flex items-center justify-between text-sm font-bold text-apple-darkGray"
+              className="w-full flex items-center justify-between text-sm font-semibold text-enterprise-text"
             >
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-lg bg-apple-blue/10 flex items-center justify-center">
-                  <Info size={16} className="text-apple-blue" strokeWidth={2.5} />
+                <div className="w-8 h-8 rounded-lg bg-enterprise-blue/10 flex items-center justify-center">
+                  <Info size={16} className="text-enterprise-blue" strokeWidth={2.5} />
                 </div>
-                <span>Calculation Breakdown</span>
+                <span>Calculation Details</span>
               </div>
-              {showSteps ? <ChevronUp size={20} strokeWidth={2.5} /> : <ChevronDown size={20} strokeWidth={2.5} />}
+              {showSteps ? <ChevronUp size={18} strokeWidth={2.5} /> : <ChevronDown size={18} strokeWidth={2.5} />}
             </button>
             {showSteps && (
-              <div className="mt-6 text-[13px] text-apple-gray leading-relaxed mono p-5 bg-white rounded-2xl border border-black/[0.03] shadow-inner font-bold">
+              <div className="mt-4 text-[13px] text-enterprise-textMuted leading-relaxed font-mono p-4 bg-enterprise-bgAlt rounded-xl border border-enterprise-border">
                 {input ? (
                   <div className="space-y-2">
-                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-widest text-[10px]">Input</span> <span>{input}</span></p>
-                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-widest text-[10px]">Parser</span> <span>Math.JS Kernel v15</span></p>
-                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-widest text-[10px]">Precision</span> <span>14 Digits</span></p>
-                    <div className="h-px bg-black/[0.03] my-2" />
-                    <p className="flex justify-between text-apple-success font-extrabold tracking-tight"><span>Result</span> <span>{result}</span></p>
+                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-wider text-[10px]">Input</span> <span className="text-enterprise-text">{input}</span></p>
+                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-wider text-[10px]">Engine</span> <span className="text-enterprise-text">Math.JS v15</span></p>
+                    <p className="flex justify-between"><span className="opacity-50 uppercase tracking-wider text-[10px]">Precision</span> <span className="text-enterprise-text">14 Digits</span></p>
+                    <div className="h-px bg-enterprise-border my-2" />
+                    <p className="flex justify-between text-enterprise-blue font-semibold"><span>Result</span> <span>{result}</span></p>
                   </div>
-                ) : "Computation path is empty."}
+                ) : "Enter an expression to see details."}
               </div>
             )}
           </div>
         </div>
 
         {/* Right: Graphing */}
-        <div className="flex-1 flex flex-col p-8 md:p-12 space-y-10 overflow-y-auto">
-          <div className="apple-card p-10 flex-1 flex flex-col min-h-[450px]">
-            <div className="flex items-center justify-between mb-10">
+        <div className="flex-1 flex flex-col p-6 md:p-10 space-y-8 overflow-y-auto">
+          <div className="enterprise-card p-8 flex-1 flex flex-col min-h-[400px]">
+            <div className="flex items-center justify-between mb-8">
               <div className="flex flex-col">
-                <div className="text-[11px] font-bold text-apple-success uppercase tracking-[0.2em] flex items-center space-x-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-apple-success" />
-                  <span>Geometric Plot</span>
+                <div className="text-[11px] font-semibold text-enterprise-blue uppercase tracking-wider flex items-center space-x-2 mb-1">
+                  <div className="w-2 h-2 rounded-full bg-enterprise-blue" />
+                  <span>Function Plot</span>
                 </div>
-                <h3 className="text-2xl font-bold text-apple-darkGray tracking-tight">Function Visualization</h3>
+                <h3 className="text-xl font-bold text-enterprise-text">Graph Visualization</h3>
               </div>
 
-              <div className="flex items-center space-x-3 bg-apple-bg border border-black/[0.04] px-5 py-2.5 rounded-2xl shadow-inner">
-                <span className="text-[12px] font-bold text-apple-gray uppercase tracking-widest">f(x) = </span>
+              <div className="flex items-center space-x-3 bg-enterprise-bgAlt border border-enterprise-border px-4 py-2 rounded-xl">
+                <span className="text-[12px] font-semibold text-enterprise-textMuted uppercase tracking-wider">f(x) = </span>
                 <input
                   value={graphFn}
                   onChange={(e) => setGraphFn(e.target.value)}
-                  className="bg-transparent border-none outline-none text-[15px] font-extrabold text-apple-darkGray w-40"
+                  className="bg-transparent border-none outline-none text-[14px] font-semibold text-enterprise-text w-32"
                 />
               </div>
             </div>
 
-            <div className="flex-1 min-h-[350px]">
+            <div className="flex-1 min-h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={graphData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#00000008" vertical={false} />
-                  <XAxis dataKey="x" stroke="#8E8E93" fontSize={11} tickLine={false} axisLine={false} fontStyle="bold" />
-                  <YAxis stroke="#8E8E93" fontSize={11} tickLine={false} axisLine={false} fontStyle="bold" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+                  <XAxis dataKey="x" stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
+                  <YAxis stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
                       backdropFilter: 'blur(10px)',
-                      border: '1px solid rgba(0,0,0,0.05)',
-                      borderRadius: '16px',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
+                      border: '1px solid #E2E8F0',
+                      borderRadius: '12px',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
                     }}
-                    itemStyle={{ color: '#34C759', fontWeight: '800', fontSize: '13px' }}
+                    itemStyle={{ color: '#3B82F6', fontWeight: '600', fontSize: '13px' }}
                   />
-                  <Line type="monotone" dataKey="y" stroke="#34C759" strokeWidth={4} dot={false} animationDuration={1000} />
+                  <Line
+                    type="monotone"
+                    dataKey="y"
+                    stroke="url(#gradient)"
+                    strokeWidth={3}
+                    dot={false}
+                    animationDuration={1000}
+                  />
+                  <defs>
+                    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="100%" stopColor="#8B5CF6" />
+                    </linearGradient>
+                  </defs>
                 </LineChart>
               </ResponsiveContainer>
             </div>

@@ -9,7 +9,7 @@ import {
   ChevronRight,
   Settings,
   Zap,
-  Heart
+  Shield
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -22,10 +22,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', label: 'Scanner', icon: Camera, color: 'text-apple-blue' },
-    { path: '/solver', label: 'Solver', icon: Sparkles, color: 'text-purple-500' },
-    { path: '/calculator', label: 'Scientific', icon: Calculator, color: 'text-apple-success' },
-    { path: '/recall', label: 'Daily Recall', icon: BrainCircuit, color: 'text-apple-warning' },
+    { path: '/', label: 'Scanner', icon: Camera, description: 'Capture & analyze' },
+    { path: '/solver', label: 'AI Solver', icon: Sparkles, description: 'Step-by-step solutions' },
+    { path: '/calculator', label: 'Calculator', icon: Calculator, description: 'Scientific computing' },
+    { path: '/recall', label: 'Daily Recall', icon: BrainCircuit, description: 'Spaced repetition' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -34,41 +34,42 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/15 backdrop-blur-sm z-[150] md:hidden transition-opacity duration-500"
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[150] md:hidden transition-opacity duration-500"
           onClick={onClose}
         />
       )}
 
-      {/* Sidebar Container */}
-      <aside 
-        className={`fixed inset-y-0 left-0 z-[200] w-72 apple-blur border-r border-black/[0.05] shadow-[20px_0_60px_rgba(0,0,0,0.06)] transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) md:translate-x-0 ${
+      {/* Sidebar Container - Enterprise Navy Theme */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-[200] w-72 bg-enterprise-navy transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex flex-col h-full overflow-hidden bg-white/80">
-          
+        <div className="flex flex-col h-full overflow-hidden">
+
           {/* Top Branding Section */}
-          <div className="p-8 pb-4 pt-12 md:pt-8">
+          <div className="p-6 pt-12 md:pt-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-11 h-11 bg-apple-blue rounded-[12px] flex items-center justify-center shadow-lg shadow-apple-blue/20">
+                {/* Gradient Logo */}
+                <div className="w-11 h-11 bg-gradient-to-br from-enterprise-blue to-enterprise-purple rounded-xl flex items-center justify-center shadow-lg shadow-enterprise-blue/30">
                   <span className="font-extrabold text-white text-xl">S</span>
                 </div>
-                <div className="flex flex-col -space-y-1">
-                  <span className="font-bold text-xl tracking-tighter text-apple-darkGray">Stepwise</span>
-                  <span className="text-[11px] font-extrabold text-apple-success uppercase tracking-[0.2em]">Unlimited</span>
+                <div className="flex flex-col -space-y-0.5">
+                  <span className="font-bold text-xl tracking-tight text-white">Stepwise</span>
+                  <span className="text-[10px] font-semibold text-enterprise-blue uppercase tracking-widest">AI Platform</span>
                 </div>
               </div>
-              <button onClick={onClose} className="md:hidden p-2 text-apple-gray hover:bg-black/5 rounded-full transition-colors">
-                <X size={24} strokeWidth={2.5} />
+              <button onClick={onClose} className="md:hidden p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                <X size={22} strokeWidth={2.5} />
               </button>
             </div>
           </div>
 
           {/* Navigation Items */}
-          <nav className="flex-1 px-4 py-8 space-y-1 overflow-y-auto">
-            <div className="text-[11px] font-bold text-apple-gray/60 uppercase tracking-[0.2em] mb-4 ml-4">Library</div>
+          <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+            <div className="text-[11px] font-semibold text-white/40 uppercase tracking-wider mb-3 ml-3">Features</div>
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);
@@ -77,60 +78,77 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   key={item.path}
                   to={item.path}
                   onClick={onClose}
-                  className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-all duration-300 group relative overflow-hidden ${
-                    active 
-                      ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' 
-                      : 'hover:bg-black/[0.04] text-apple-darkGray'
+                  className={`flex items-center justify-between px-3 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${
+                    active
+                      ? 'bg-gradient-to-r from-enterprise-blue to-enterprise-purple text-white shadow-lg shadow-enterprise-blue/20'
+                      : 'hover:bg-white/[0.08] text-white/70 hover:text-white'
                   }`}
                 >
-                  <div className="flex items-center space-x-4 relative z-10">
-                    <div className={`${active ? 'text-white' : item.color} transition-colors`}>
-                      <Icon size={20} strokeWidth={2.5} />
+                  <div className="flex items-center space-x-3 relative z-10">
+                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all ${
+                      active
+                        ? 'bg-white/20'
+                        : 'bg-white/[0.06] group-hover:bg-white/10'
+                    }`}>
+                      <Icon size={18} strokeWidth={2.5} className={active ? 'text-white' : 'text-white/80'} />
                     </div>
-                    <span className={`text-[16px] font-bold tracking-tight ${active ? 'text-white' : 'text-apple-darkGray'}`}>
-                      {item.label}
-                    </span>
+                    <div className="flex flex-col">
+                      <span className={`text-[14px] font-semibold ${active ? 'text-white' : 'text-white/90'}`}>
+                        {item.label}
+                      </span>
+                      <span className={`text-[11px] ${active ? 'text-white/70' : 'text-white/40'}`}>
+                        {item.description}
+                      </span>
+                    </div>
                   </div>
-                  {active ? (
+                  {active && (
                     <div className="w-1.5 h-1.5 rounded-full bg-white shadow-sm relative z-10" />
-                  ) : (
-                    <ChevronRight size={14} className="opacity-0 group-hover:opacity-40 transition-opacity" strokeWidth={3} />
+                  )}
+                  {!active && (
+                    <ChevronRight size={14} className="opacity-0 group-hover:opacity-60 transition-opacity text-white/60" strokeWidth={2.5} />
                   )}
                 </Link>
               );
             })}
 
-            <div className="pt-10 text-[11px] font-bold text-apple-gray/60 uppercase tracking-[0.2em] mb-4 ml-4">System</div>
+            <div className="pt-8 text-[11px] font-semibold text-white/40 uppercase tracking-wider mb-3 ml-3">System</div>
             <Link
               to="/settings"
               onClick={onClose}
-              className={`w-full flex items-center space-x-4 px-4 py-4 rounded-2xl transition-all group ${
-                isActive('/settings') ? 'bg-apple-blue text-white shadow-lg shadow-apple-blue/25' : 'hover:bg-black/[0.04] text-apple-darkGray'
+              className={`w-full flex items-center space-x-3 px-3 py-3.5 rounded-xl transition-all group ${
+                isActive('/settings')
+                  ? 'bg-gradient-to-r from-enterprise-blue to-enterprise-purple text-white shadow-lg shadow-enterprise-blue/20'
+                  : 'hover:bg-white/[0.08] text-white/70 hover:text-white'
               }`}
             >
-              <Settings size={20} strokeWidth={2.5} className={`${isActive('/settings') ? 'text-white' : 'text-apple-gray group-hover:text-apple-blue'}`} />
-              <span className="text-[16px] font-bold tracking-tight">Settings</span>
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all ${
+                isActive('/settings')
+                  ? 'bg-white/20'
+                  : 'bg-white/[0.06] group-hover:bg-white/10'
+              }`}>
+                <Settings size={18} strokeWidth={2.5} className={isActive('/settings') ? 'text-white' : 'text-white/80'} />
+              </div>
+              <span className="text-[14px] font-semibold">Settings</span>
             </Link>
           </nav>
 
-          {/* Footer */}
-          <div className="p-6 mt-auto border-t border-black/[0.05]">
-            <div className="bg-gradient-to-tr from-apple-success/[0.08] to-apple-blue/[0.08] p-5 rounded-[24px] border border-apple-success/10 shadow-sm">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="w-8 h-8 bg-apple-success/10 rounded-lg flex items-center justify-center">
-                  <Zap size={16} className="text-apple-success" />
+          {/* Footer - Enterprise Info Card */}
+          <div className="p-4 mt-auto">
+            <div className="bg-gradient-to-br from-enterprise-blue/20 to-enterprise-purple/20 p-4 rounded-2xl border border-white/10">
+              <div className="flex items-center space-x-2 mb-2">
+                <div className="w-7 h-7 bg-enterprise-blue/30 rounded-lg flex items-center justify-center">
+                  <Zap size={14} className="text-enterprise-blueLight" />
                 </div>
-                <span className="text-[11px] font-extrabold text-apple-success uppercase tracking-widest">100% Free</span>
+                <span className="text-[11px] font-bold text-enterprise-blueLight uppercase tracking-wider">Free Forever</span>
               </div>
-              <p className="text-[13px] font-bold text-apple-darkGray leading-relaxed">
-                All features unlocked. No account required. Your data stays on your device.
+              <p className="text-[12px] font-medium text-white/60 leading-relaxed">
+                Enterprise-grade AI. No account needed. All data stored locally.
               </p>
             </div>
 
-            <div className="mt-4 flex items-center justify-center space-x-1 text-apple-gray text-[11px] font-medium">
-              <span>Made with</span>
-              <Heart size={12} className="text-apple-danger fill-apple-danger" />
-              <span>for learners everywhere</span>
+            <div className="mt-4 flex items-center justify-center space-x-2">
+              <Shield size={12} className="text-white/30" />
+              <span className="text-[10px] text-white/30 font-medium">Privacy First Platform</span>
             </div>
           </div>
         </div>

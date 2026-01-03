@@ -2,7 +2,17 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { SolverResult } from "./types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Use Vite's environment variable system
+const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+
+// Helper to check if API is configured
+const checkApiConfigured = () => {
+  if (!ai || !apiKey) {
+    throw new Error("AI features require an API key. Please configure VITE_GEMINI_API_KEY in your environment to enable math solving.");
+  }
+};
 
 const solverSchema = {
   type: Type.OBJECT,
@@ -42,8 +52,9 @@ When solving problems:
 7. For each step, provide a 'simplifiedExplanation' that removes all technical debt and uses extreme clarity or analogies.`;
 
 export const solveMathProblem = async (problem: string): Promise<SolverResult> => {
+  checkApiConfigured();
   try {
-    const response = await ai.models.generateContent({
+    const response = await ai!.models.generateContent({
       model: "gemini-3-pro-preview",
       contents: `Solve this math problem: ${problem}.`,
       config: {
@@ -66,8 +77,9 @@ export const solveMathProblem = async (problem: string): Promise<SolverResult> =
 };
 
 export const solveMathProblemFromImage = async (base64Image: string): Promise<SolverResult> => {
+  checkApiConfigured();
   try {
-    const response = await ai.models.generateContent({
+    const response = await ai!.models.generateContent({
       model: "gemini-3-pro-preview",
       contents: {
         parts: [
